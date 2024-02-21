@@ -4,64 +4,143 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Student Registration Form</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+
+    #registrationForm {
+        background-color: #fff;
+        max-width: 500px;
+        margin: 20px auto;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2, h3 {
+        color: #333;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    textarea,
+    select {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    input[type="submit"],
+    input[type="button"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    input[type="submit"]:hover,
+    input[type="button"]:hover {
+        background-color: #45a049;
+    }
+
+    .error {
+        color: red;
+        font-size: 0.9em;
+    }
+</style>
 </head>
 <body>
 <h2>Student Registration Form</h2>
-<form id="registrationForm">
+<form id="registrationForm" onsubmit="return validateForm()">
     <h3>Student Information</h3>
-    <label for="fullName">Full Name:</label><br>
-    <input type="text" id="fullName" name="fullName" required><br><br>
-
-    <label for="email">Email:</label><br>
-    <input type="email" id="email" name="email" required><br><br>
-
-    <label for="gender">Gender:</label><br>
+    <label for="fullName">Full Name:</label>
+    <input type="text" id="fullName" name="fullName" required>
+    
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    
+    <label for="phoneNumber">Phone Number:</label>
+    <input type="text" id="phoneNumber" name="phoneNumber" pattern="[0-9]{10}" title="Please enter 10 digit phone number" required>
+    
+    <label for="gender">Gender:</label>
     <input type="radio" id="male" name="gender" value="male">
     <label for="male">Male</label>
     <input type="radio" id="female" name="gender" value="female">
-    <label for="female">Female</label><br><br>
-
-    <label for="age">Age:</label><br>
-    <input type="number" id="age" name="age" required><br><br>
-
-    <label for="country">Country:</label><br>
+    <label for="female">Female</label>
+    
+    <label for="age">Age:</label>
+    <input type="number" id="age" name="age" required>
+    
+    <label for="country">Country:</label>
     <select id="country" name="country">
         <option value="India">India</option>
         <option value="UK">UK</option>
         <option value="Canada">Canada</option>
         <option value="Australia">Australia</option>
         <option value="USA">USA</option>
-    </select><br><br>
-
+    </select>
+    
     <h3>Course Details</h3>
-    <label for="courseName">Course Name:</label><br>
-    <input type="text" id="courseName" name="courseName" required><br><br>
-
-    <label for="courseRating">How good is the course?</label><br>
-    <input type="range" id="courseRating" name="courseRating" min="1" max="10" value="5"><br><br>
-
-    <label for="courseInterest">Your interest level:</label><br>
-    <input type="range" id="courseInterest" name="courseInterest" min="1" max="10" value="5"><br><br>
-
-    <label for="courseType">Course Type:</label><br>
+    <label for="courseName">Course Name:</label>
+    <input type="text" id="courseName" name="courseName" required>
+    
+    <label for="courseRating">How good is the course?</label>
+    <input type="range" id="courseRating" name="courseRating" min="1" max="10" value="5">
+    
+    <label for="courseInterest">Your interest level:</label>
+    <input type="range" id="courseInterest" name="courseInterest" min="1" max="10" value="5">
+    
+    <label for="courseType">Course Type:</label>
     <select id="courseType" name="courseType">
         <option value="online">Online</option>
         <option value="offline">Offline</option>
-    </select><br><br>
-
-    <label for="courseDuration">Course Duration (in weeks):</label><br>
-    <input type="number" id="courseDuration" name="courseDuration" required><br><br>
-
-    <label for="courseDescription">Course Description:</label><br>
-    <textarea id="courseDescription" name="courseDescription" rows="4" required></textarea><br><br>
+    </select>
     
-    <input type="submit" value="Submit"><br><br>
+    <label for="courseDuration">Course Duration (in weeks):</label>
+    <input type="number" id="courseDuration" name="courseDuration" required>
+    
+    <label for="courseDescription">Course Description:</label>
+    <textarea id="courseDescription" name="courseDescription" rows="4" required></textarea>
+    
+    <input type="submit" value="Submit">
     <input type="button" value="Clear" onclick="clearForm()">
 </form>
 
 <script>
     function clearForm() {
         document.getElementById("registrationForm").reset();
+    }
+
+    function validateForm() {
+        var phoneNumber = document.getElementById("phoneNumber").value;
+        if (isNaN(phoneNumber) || phoneNumber.length != 10) {
+            alert("Please enter a valid 10-digit phone number.");
+            return false;
+        }
+
+        var email = document.getElementById("email").value;
+        var emailRegex = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+        if (!email.match(emailRegex)) {
+            alert("Please enter a valid email address.");
+            return false;
+        }
+
+        return true;
     }
 </script>
 </body>
